@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiStone", "ApiStone\ApiStone.csproj", "{16884511-07B6-4B0D-B17B-65C7B02D1131}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16884511-07B6-4B0D-B17B-65C7B02D1131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16884511-07B6-4B0D-B17B-65C7B02D1131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16884511-07B6-4B0D-B17B-65C7B02D1131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16884511-07B6-4B0D-B17B-65C7B02D1131}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F766552D-8E49-4308-AC83-5D514C191FA4}
+	EndGlobalSection
+EndGlobal
