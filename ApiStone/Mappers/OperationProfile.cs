@@ -8,9 +8,9 @@ namespace ApiStone.Mappers
     {
         public void OperationProfile()
         {
-            CreateMap<Operation, PostOperationDto>().ReverseMap();
-            CreateMap<Operation, GetOperationDto>().ReverseMap();
-            CreateMap<Operation, PutOperationDto>().ReverseMap();
+            CreateMap<Operation, OperationPostDto>().ReverseMap();
+            CreateMap<Operation, OperationGetDto>().ReverseMap();
+            CreateMap<Operation, OperationPutDto>().ReverseMap();
         }
     }
 }

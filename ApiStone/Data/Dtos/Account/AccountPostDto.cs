@@ -3,7 +3,7 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Data.Dtos.Account
 {
-    public class PostAccountDto
+    public class AccountPostDto
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

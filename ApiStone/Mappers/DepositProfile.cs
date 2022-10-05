@@ -8,8 +8,8 @@ namespace ApiStone.Mappers
     {
         public void DepositProfile()
         {
-            CreateMap<Operation, PostDepositDto>().ReverseMap();
-            CreateMap<Operation, GetDepositDto>().ReverseMap();
+            CreateMap<Operation, DepositPostDto>().ReverseMap();
+            CreateMap<Operation, DepositGetDto>().ReverseMap();
         }
     }
 }

@@ -25,7 +25,7 @@
             Balance, // 2
             Transfer, // 3
             FutureDeposit, // 4
-            FutureWithdraw,
+            FutureWithdraw, // 5
         }
 
         #endregion Tipo de Operação

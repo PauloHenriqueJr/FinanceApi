@@ -4,7 +4,7 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Data.Dtos.Withdraw
 {
-    public class PostWithdrawDto
+    public class WithdrawPostDto
     {
         public string Description { get; set; } = "description example: withdraw";
         public decimal Amount { get; set; } // amount of money to be withdrawn

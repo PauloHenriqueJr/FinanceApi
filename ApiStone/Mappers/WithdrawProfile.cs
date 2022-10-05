@@ -8,8 +8,8 @@ namespace ApiStone.Mappers
     {
         public void WithdrawProfile()
         {
-            CreateMap<Operation, PostWithdrawDto>().ReverseMap();
-            CreateMap<Operation, GetWithdrawDto>().ReverseMap();
+            CreateMap<Operation, WithdrawPostDto>().ReverseMap();
+            CreateMap<Operation, WithdrawGetDto>().ReverseMap();
         }
     }
 }

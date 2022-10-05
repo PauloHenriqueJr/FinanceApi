@@ -4,7 +4,7 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Data.Dtos.Operation
 {
-    public class GetOperationDto
+    public class OperationGetDto
     {
         public int Id { get; set; }
         public string Description { get; set; }

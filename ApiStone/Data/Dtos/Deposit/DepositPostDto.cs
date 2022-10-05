@@ -3,7 +3,7 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Data.Dtos.Deposit
 {
-    public class PostDepositDto
+    public class DepositPostDto
     {
         public string? Description { get; set; } = "description example: deposit";
         public decimal Amount { get; set; } // amount of money to be deposited

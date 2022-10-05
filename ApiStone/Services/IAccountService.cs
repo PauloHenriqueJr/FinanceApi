@@ -9,30 +9,30 @@ namespace ApiStone.Services
     public interface IAccountService
     {
         #region Account Methods
-        Task<IEnumerable<GetAccountDto>> GetAllAccountsAsync();
-        Task<GetAccountDto> GetAccountAsync(int id);
-        Task<GetAccountDto> PostAccountAsync(PostAccountDto accountDto);
-        Task<GetAccountDto> PutAccountAsync(int id, PutAccountDto accountDto);
-        Task<GetAccountDto> DeleteAccountAsync(int id);
+        Task<IEnumerable<AccountGetDto>> GetAllAccountsAsync();
+        Task<AccountGetDto> GetAccountAsync(int id);
+        Task<AccountGetDto> PostAccountAsync(AccountPostDto accountDto);
+        Task<AccountGetDto> PutAccountAsync(int id, AccountPutDto accountDto);
+        Task<AccountGetDto> DeleteAccountAsync(int id);
 
         #endregion Account Methods
 
         #region Deposit Methods
-        Task<GetDepositDto> PostDepositAsync(int id, PostDepositDto depositDto);
-        Task<GetDepositDto> PostDepositByDateAsync(int id, DateTime date, PostDepositDto depositDto);
-        Task<GetDepositDto> GetDepositAsync(int id);
+        Task<DepositGetDto> PostDepositAsync(int id, DepositPostDto depositDto);
+        Task<DepositGetDto> PostDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto);
+        Task<DepositGetDto> GetDepositAsync(int id);
 
         #endregion Deposit Methods
 
         #region Withdraw Methods
-        Task<GetWithdrawDto> PostWithdrawAsync(int id, PostWithdrawDto withdrawDto);
-        Task<GetWithdrawDto> PostWithdrawByDateAsync(int id, DateTime date, PostWithdrawDto withdrawDto);
-        Task<GetWithdrawDto> GetWithdrawAsync(int id);
+        Task<WithdrawGetDto> PostWithdrawAsync(int id, WithdrawPostDto withdrawDto);
+        Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto);
+        Task<WithdrawGetDto> GetWithdrawAsync(int id);
 
         #endregion Withdraw Methods
 
         #region Operation Methods
-        Task<IEnumerable<GetOperationDto>> GetAllOperationsAsync(int id);
+        Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id);
 
         #endregion Operation Methods
 

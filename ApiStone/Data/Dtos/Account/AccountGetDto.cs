@@ -7,7 +7,7 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Data.Dtos.Account
 {
-    public class GetAccountDto
+    public class AccountGetDto
     {
         public int Id { get; set; }
         public string? UserName { get; set; }

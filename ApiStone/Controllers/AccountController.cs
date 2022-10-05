@@ -28,7 +28,7 @@ namespace ApiStone.Controllers
         #region Account Methods 
         
         [HttpPost("/account")] // cria uma conta
-        public async Task<ActionResult> PostAccountAsync([FromBody] PostAccountDto accountPostDto)
+        public async Task<ActionResult> PostAccountAsync([FromBody] AccountPostDto accountPostDto)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace ApiStone.Controllers
         }
 
         [HttpGet("/account")] // retorna todas as contas apenas para teste, não usado em produção
-        public async Task<IEnumerable<GetAccountDto>> GetAllAccountsAsync()
+        public async Task<IEnumerable<AccountGetDto>> GetAllAccountsAsync()
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ApiStone.Controllers
 
 
         [HttpPut("/account/{id}")] // atualiza uma conta
-        public async Task<ActionResult> PutAccountAsync(int id, [FromBody] PutAccountDto accountDto)
+        public async Task<ActionResult> PutAccountAsync(int id, [FromBody] AccountPutDto accountDto)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace ApiStone.Controllers
         
         #region Deposit Post
         [HttpPost("/deposit/{id}")] // deposita um valor na conta
-        public async Task<ActionResult> PostDepositAsync(int id, [FromBody] PostDepositDto depositDto)
+        public async Task<ActionResult> PostDepositAsync(int id, [FromBody] DepositPostDto depositDto)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace ApiStone.Controllers
 
         #region Deposit Post By Date
         [HttpPost("/deposit-future/{id}")] // deposita um valor na conta por data especifica no formato yyyy-MM-dd na url
-        public async Task<ActionResult> PostDepositByDateAsync(int id, [FromQuery] DateTime date, [FromBody] PostDepositDto depositDto)
+        public async Task<ActionResult> PostDepositByDateAsync(int id, [FromQuery] DateTime date, [FromBody] DepositPostDto depositDto)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace ApiStone.Controllers
         #region Withdraw Post
 
         [HttpPost("/withdraw/{id}")] // saca um valor da conta
-        public async Task<ActionResult> PostWithdrawAsync(int id, [FromBody] PostWithdrawDto withdrawDto)
+        public async Task<ActionResult> PostWithdrawAsync(int id, [FromBody] WithdrawPostDto withdrawDto)
         {
             try
             {
@@ -179,7 +179,7 @@ namespace ApiStone.Controllers
         #region Withdraw Post By Date
 
         [HttpPost("/withdraw-future/{id}")] // saca um valor da conta por data especifica no formato yyyy-MM-dd na url
-        public async Task<ActionResult> PostWithdrawByDateAsync(int id, [FromQuery] DateTime date, [FromBody] PostWithdrawDto withdrawDto)
+        public async Task<ActionResult> PostWithdrawByDateAsync(int id, [FromQuery] DateTime date, [FromBody] WithdrawPostDto withdrawDto)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace ApiStone.Controllers
         #region Get Statement By Account Id
         
         [HttpGet("/statement/{id}")] // retorna todas as operações de deposito apenas para teste, não usado em produção
-        public async Task<IEnumerable<GetOperationDto>> GetAllOperationsAsync(int id)
+        public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
             try
             {
@@ -233,6 +233,24 @@ namespace ApiStone.Controllers
         }
 
         #endregion Get Statement By Account Id
+
+        #region Get Statement By Account Id And Date
+
+        [HttpGet("/statement-date/{id}")] // retorna todas as operações da conta por data especifica no formato yyyy-MM-dd na url
+        public async Task<IEnumerable<OperationGetDto>> GetOperationsByDateAsync(int id, [FromQuery] DateTime date)
+        {
+            try
+            {
+                var operations = await _accountService.GetOperationsByDateAsync(id, date);
+                return operations;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        #endregion Get Statement By Account Id And Date
 
         #endregion Statement Methods
 
