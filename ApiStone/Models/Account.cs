@@ -1,7 +1,5 @@
-﻿using ApiStone.Data;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using static ApiStone.Enuns.EnumStatus;
 
 namespace ApiStone.Models
 {
@@ -11,17 +9,16 @@ namespace ApiStone.Models
         [Required]
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Name { get; set; }
+        public string? UserName { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public int Cpf { get; set; }
-        //public string Email { get; set; }
-        //public string Password { get; set; }
+        public string? Cpf { get; set; }
+        public decimal Balance { get; set; } 
+        public AccountStatus Status { get; set; }
+        //public string Token { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public virtual Balance Balance { get; set; }
-        public virtual List<Statement> Statements { get; set; }
-        public virtual List<Deposit> Deposits { get; set; }
-        public virtual List<Withdraw> Withdraws { get; set; }
-
+        public DateTime UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public virtual List<Operation>? Operations { get; set; }
     }
+
 }
