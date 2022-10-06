@@ -29,6 +29,11 @@ namespace ApiStone.Services
         #region Account Methods
 
         #region PostAccount
+        /// <summary>
+        /// Method to create a new account
+        /// </summary>
+        /// <param name="accountPostDto"></param>
+        /// <returns></returns>
         public async Task<AccountGetDto> PostAccountAsync(AccountPostDto accountPostDto)
         {
             var account = _mapper.Map<Account>(accountPostDto);
@@ -39,7 +44,28 @@ namespace ApiStone.Services
 
         #endregion PostAccount
 
+        #region GetAllAccounts
+
+        /// <summary>
+        /// Method to get all accounts
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<AccountGetDto>> GetAllAccountsAsync()
+        {
+            var accounts = await _context.Accounts.ToListAsync();
+            return _mapper.Map<IEnumerable<AccountGetDto>>(accounts);
+        }
+
+        #endregion GetAllAccounts
+
         #region GetAllAccount By Id
+
+        /// <summary>
+        /// Method to get account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> GetAccountAsync(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -52,17 +78,15 @@ namespace ApiStone.Services
 
         #endregion GetAllAccount By Id
 
-        #region GetAllAccounts
-        public async Task<IEnumerable<AccountGetDto>> GetAllAccountsAsync()
-        {
-            var accounts = await _context.Accounts.ToListAsync();
-            return _mapper.Map<IEnumerable<AccountGetDto>>(accounts);
-        }
-
-        #endregion GetAllAccounts
-
         #region PutAccount By Id
 
+        /// <summary>
+        /// Method to update an account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="accountPutDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> PutAccountAsync(int id, AccountPutDto accountPutDto)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -79,6 +103,12 @@ namespace ApiStone.Services
 
         #region DeleteAccount By Id
 
+        /// <summary>
+        /// Method to delete and account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> DeleteAccountAsync(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -98,6 +128,14 @@ namespace ApiStone.Services
         #region Deposit Methods
 
         #region PostDeposit By Id
+
+        /// <summary>
+        /// Method to create a new deposit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="depositDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<DepositGetDto> PostDepositAsync(int id, DepositPostDto depositDto)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -127,6 +165,15 @@ namespace ApiStone.Services
         #endregion PostDeposit By Id
 
         #region PostDeposit By Date
+
+        /// <summary>
+        /// Method to create a new future deposit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <param name="depositDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<DepositGetDto> PostDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -137,6 +184,10 @@ namespace ApiStone.Services
             else if (depositDto.Amount <= 0 || depositDto.Amount == null)
             {
                 throw new Exception("Valor inválido");
+            }
+            else if (date < DateTime.Now || date == null)
+            {
+                throw new Exception("Data inválida");
             }
 
             else
@@ -157,6 +208,13 @@ namespace ApiStone.Services
         #endregion PostDeposit By Date
 
         #region GetDeposit By Id
+
+        /// <summary>
+        /// Method to get deposit by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<DepositGetDto> GetDepositAsync(int id)
         {
             var operation = await _context.Operations.FindAsync(id);
@@ -178,6 +236,14 @@ namespace ApiStone.Services
         #region Withdraw Methods
 
         #region PostWithdraw By Id
+
+        /// <summary>
+        /// Method to create new withdraw
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="withdrawDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<WithdrawGetDto> PostWithdrawAsync(int id, WithdrawPostDto withdrawDto)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -214,6 +280,14 @@ namespace ApiStone.Services
 
         #region PostWithdraw By Date
 
+        /// <summary>
+        /// Method to create a new future withdraw
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <param name="withdrawDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -250,6 +324,12 @@ namespace ApiStone.Services
 
         #region GetWithdraw By Id
 
+        /// <summary>
+        /// Method to get withdraw by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<WithdrawGetDto> GetWithdrawAsync(int id)
         {
             var operation = await _context.Operations.FindAsync(id);
@@ -272,6 +352,12 @@ namespace ApiStone.Services
 
         #region GetAllOperations By Account Id
 
+        /// <summary>
+        /// Method to get all operations by accountId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -286,6 +372,14 @@ namespace ApiStone.Services
         #endregion GetAllOperations By Account Id
 
         #region GetOperations By Account Id And Date
+
+        /// <summary>
+        /// Method to get operation by accountId and future date
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<OperationGetDto>> GetOperationsByDateAsync(int id, DateTime date)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -304,6 +398,13 @@ namespace ApiStone.Services
         #region Balance Methods
 
         #region GetBalance By Id
+
+        /// <summary>
+        /// Method to get an account balance by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<AccountBalanceGetDto> GetBalanceAsync(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -320,6 +421,13 @@ namespace ApiStone.Services
 
         #region GetBalance By Date
 
+        /// <summary>
+        /// Method to get an account balance by future date
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<AccountBalanceGetDto> GetBalanceByDateAsync(int id, DateTime date)
         {
             var account = await _context.Accounts.FindAsync(id);

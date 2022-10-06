@@ -1,6 +1,8 @@
 using ApiStone.Data;
 using ApiStone.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,30 @@ builder.Services.AddScoped<AccountService, AccountService>();
 //builder.Services.AddScoped<RecoverPasswordService, RecoverPasswordService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() 
+    {
+        Title = "Customer Finance Api",
+        Version = "v1", 
+        Description = "Project developed as a challenge - ASP.NET Core Web API by Paulo Henrique",
+        Contact = new OpenApiContact
+        {
+            Name = "Project on github",
+            Url = new Uri("https://github.com/PauloHenriqueJr/FinanceApi")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Project License",
+            Url = new Uri("https://github.com/PauloHenriqueJr/FinanceApi/blob/master/LICENSE.txt")
+        }
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+    
+});
 var app = builder.Build();
 
 #endregion main snippet

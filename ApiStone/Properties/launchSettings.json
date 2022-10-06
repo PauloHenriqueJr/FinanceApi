@@ -10,6 +10,7 @@
   },
   "profiles": {
     "ApiStone": {
+      "desciption": "Api Stone - ASP.NET Core Web API - Feita por Paulo Henrique",
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -11,15 +11,8 @@ namespace ApiStone.Data.Dtos.Account
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
-        public string? Cpf { get; set; }
-        //public string Email { get; set; }
-        //public string Password { get; set; }
-        [JsonConverter(typeof(JsonDateTimeConverter))]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
         [JsonConverter(typeof(JsonDecimalConverter))]
-        public decimal Balance { get; set; } 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public AccountStatus Status { get; set; } 
+        public decimal Balance { get; set; } = 0.0M;
     }
 
 }
