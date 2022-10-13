@@ -4,6 +4,16 @@ Api developed as a learning challenge with technologies, Net 6, C# and Mysql.
 
 API's proposal was to be able to create a shopkeeper system where the customer could create an account, make deposits, withdraw, check balance, make future deposits and withdrawals and be able to check future balance.
 
+# Endpoints
+
+<p align="center">
+<img 
+    src="swagger.png"
+    width="800px"
+    style="border-radius: 10px;"
+  />
+</p>
+
 # Description
 
 A REST API with resources representing Account, Balance, Withdrawals, Deposits and Statement, developed in .Net 6.:
@@ -20,18 +30,19 @@ A REST API with resources representing Account, Balance, Withdrawals, Deposits a
 # Table of Contents
 
 1. **[Title](#financeapi "Title")**
-2. **[Description](#description "Description")**
-3. **[Table of Contents](#table-of-contents "Table of Contents")**
-4. **[Installation](#installation "Installation")**
+2. **[Endpoints](#endpoints "Endpoints")**
+3. **[Description](#description "Description")**
+4. **[Table of Contents](#table-of-contents "Table of Contents")**
+5. **[Installation](#installation "Installation")**
 
     1. **[Requirements](#requirements "Requirements")**
     2. **[Clone and Restore](#clone-and-restore "Clone and Restore")**
     3. **[Mysql Installation (Windows)](#mysql-installation-windows "Mysql Installation (Windows)")**
     4. **[Mysql in the project](#mysql-in-the-project "Mysql in the project")**
 
-5. **[Usage](#usage "Usage")**
-6. **[Contributing](#contributing "Contributing")**
-7. **[Credits](#credits "Credits")**
+6. **[Usage](#usage "Usage")**
+7. **[Contributing](#contributing "Contributing")**
+8. **[Credits](#credits "Credits")**
 
 # Installation
 
