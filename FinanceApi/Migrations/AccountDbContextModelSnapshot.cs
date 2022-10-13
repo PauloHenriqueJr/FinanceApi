@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ApiStone.Migrations
+namespace FinanceApi.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
     partial class AccountDbContextModelSnapshot : ModelSnapshot

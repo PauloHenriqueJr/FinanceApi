@@ -12,6 +12,7 @@ string mySqlConnection =
 builder.Configuration.GetConnectionString("ConnectionAccount");
 builder.Services.AddDbContextPool<AccountDbContext>(opt =>
 opt.UseLazyLoadingProxies().UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<AccountService, AccountService>();
@@ -61,7 +62,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
+
+//app.UseAuthorization();
 
 app.MapControllers();
 

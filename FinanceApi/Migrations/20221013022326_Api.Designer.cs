@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ApiStone.Migrations
+namespace FinanceApi.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20221005133423_Start")]
-    partial class Start
+    [Migration("20221013022326_Api")]
+    partial class Api
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

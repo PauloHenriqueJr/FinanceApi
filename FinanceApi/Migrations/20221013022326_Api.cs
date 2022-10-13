@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ApiStone.Migrations
+namespace FinanceApi.Migrations
 {
-    public partial class Start : Migration
+    public partial class Api : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

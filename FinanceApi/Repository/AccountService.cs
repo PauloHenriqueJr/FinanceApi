@@ -40,6 +40,7 @@ namespace ApiStone.Services
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
+            
         }
 
         #endregion PostAccount
