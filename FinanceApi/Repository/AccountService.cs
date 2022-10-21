@@ -24,7 +24,7 @@ namespace ApiStone.Services
             _context = context;
             _mapper = mapper;
         }
-        #endregion
+        #endregion Constructor
 
         #region Account Methods
 
@@ -40,7 +40,7 @@ namespace ApiStone.Services
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
-            
+
         }
 
         #endregion PostAccount
@@ -69,13 +69,10 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> GetAccountAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Conta não encontrada");
-            }
+            Account? account = await GetAccount(id);
             return _mapper.Map<AccountGetDto>(account);
         }
+
 
         #endregion GetAllAccount By Id
 
@@ -90,11 +87,7 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> PutAccountAsync(int id, AccountPutDto accountPutDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Conta não encontrada");
-            }
+            Account? account = await GetAccount(id);
             _mapper.Map(accountPutDto, account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
@@ -112,11 +105,7 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> DeleteAccountAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Conta não encontrada");
-            }
+            Account? account = await GetAccount(id);
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
@@ -139,12 +128,9 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<DepositGetDto> PostDepositAsync(int id, DepositPostDto depositDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Conta não encontrada");
-            }
-            else if (depositDto.Amount <= 0 || depositDto.Amount == null)
+            Account? account = await GetAccount(id);
+            
+            if (depositDto.Amount <= 0 || depositDto.Amount == null)
             {
                 throw new Exception("Valor inválido");
             }
@@ -177,12 +163,9 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<DepositGetDto> PostDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Conta não encontrada");
-            }
-            else if (depositDto.Amount <= 0 || depositDto.Amount == null)
+            Account? account = await GetAccount(id);
+            
+            if (depositDto.Amount <= 0 || depositDto.Amount == null)
             {
                 throw new Exception("Valor inválido");
             }
@@ -193,7 +176,7 @@ namespace ApiStone.Services
 
             else
             {
-               
+
                 var operation = _mapper.Map<Operation>(depositDto);
                 operation.AccountId = id;
                 operation.Type = OperationType.FutureDeposit;
@@ -247,13 +230,9 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<WithdrawGetDto> PostWithdrawAsync(int id, WithdrawPostDto withdrawDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
 
-            else if (withdrawDto.Amount <= 0 || withdrawDto.Amount == null)
+            if (withdrawDto.Amount <= 0 || withdrawDto.Amount == null)
             {
                 throw new Exception("Amount invalid");
             }
@@ -291,13 +270,9 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
 
-            else if (withdrawDto.Amount <= 0 || withdrawDto.Amount == null)
+            if (withdrawDto.Amount <= 0 || withdrawDto.Amount == null)
             {
                 throw new Exception("Amount invalid");
             }
@@ -361,11 +336,8 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
+            
             var operations = await _context.Operations.Where(x => x.AccountId == id).ToListAsync();
             return _mapper.Map<IEnumerable<OperationGetDto>>(operations);
         }
@@ -383,11 +355,8 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<OperationGetDto>> GetOperationsByDateAsync(int id, DateTime date)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
+            
             var operations = await _context.Operations.Where(x => x.AccountId == id && x.ScheduledAt == date).ToListAsync();
             return _mapper.Map<IEnumerable<OperationGetDto>>(operations);
         }
@@ -408,11 +377,7 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountBalanceGetDto> GetBalanceAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
 
             return _mapper.Map<AccountBalanceGetDto>(account);
 
@@ -431,11 +396,7 @@ namespace ApiStone.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountBalanceGetDto> GetBalanceByDateAsync(int id, DateTime date)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
 
             var operations = await _context.Operations.Where(x => x.AccountId == id).ToListAsync();
             foreach (var operation in operations)
@@ -452,7 +413,7 @@ namespace ApiStone.Services
                         account.Balance -= operation.Amount; // Subtrai o valor do saque do saldo
                         operation.Status = OperationStatus.Executed; // Muda o status da operação para executado
                     }
-                } 
+                }
             }
 
             return _mapper.Map<AccountBalanceGetDto>(account);
@@ -462,6 +423,22 @@ namespace ApiStone.Services
         #endregion GetBalance By Date
 
         #endregion Balance Methods
+
+
+        #region GetAccount Method 
+
+        private async Task<Account> GetAccount(int id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new Exception("Account not found");
+            }
+
+            return account;
+        }
+
+        #endregion GetAccount Method
 
 
     }
