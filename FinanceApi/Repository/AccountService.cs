@@ -129,10 +129,10 @@ namespace ApiStone.Services
         public async Task<DepositGetDto> PostDepositAsync(int id, DepositPostDto depositDto)
         {
             Account? account = await GetAccount(id);
-            
+
             if (depositDto.Amount <= 0 || depositDto.Amount == null)
             {
-                throw new Exception("Valor inválido");
+                throw new Exception("Invalid amount");
             }
 
             else
@@ -164,14 +164,14 @@ namespace ApiStone.Services
         public async Task<DepositGetDto> PostDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto)
         {
             Account? account = await GetAccount(id);
-            
+
             if (depositDto.Amount <= 0 || depositDto.Amount == null)
             {
-                throw new Exception("Valor inválido");
+                throw new Exception("Invalid value");
             }
             else if (date < DateTime.Now || date == null)
             {
-                throw new Exception("Data inválida");
+                throw new Exception("Invalid date");
             }
 
             else
@@ -204,11 +204,11 @@ namespace ApiStone.Services
             var operation = await _context.Operations.FindAsync(id);
             if (operation == null)
             {
-                throw new Exception("Operação não encontrada");
+                throw new Exception("Operation not found");
             }
             else if (operation.Type != OperationType.Deposit)
             {
-                throw new Exception("Operação não é um depósito");
+                throw new Exception("Operation is not a deposit");
             }
             return _mapper.Map<DepositGetDto>(operation);
         }
@@ -337,7 +337,7 @@ namespace ApiStone.Services
         public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
             Account? account = await GetAccount(id);
-            
+
             var operations = await _context.Operations.Where(x => x.AccountId == id).ToListAsync();
             return _mapper.Map<IEnumerable<OperationGetDto>>(operations);
         }
@@ -356,7 +356,7 @@ namespace ApiStone.Services
         public async Task<IEnumerable<OperationGetDto>> GetOperationsByDateAsync(int id, DateTime date)
         {
             Account? account = await GetAccount(id);
-            
+
             var operations = await _context.Operations.Where(x => x.AccountId == id && x.ScheduledAt == date).ToListAsync();
             return _mapper.Map<IEnumerable<OperationGetDto>>(operations);
         }
@@ -401,17 +401,17 @@ namespace ApiStone.Services
             var operations = await _context.Operations.Where(x => x.AccountId == id).ToListAsync();
             foreach (var operation in operations)
             {
-                if (operation.ScheduledAt <= date) // Se a data da operação for menor ou igual a data passada por parâmetro
+                if (operation.ScheduledAt <= date) 
                 {
-                    if (operation.Type == OperationType.FutureDeposit) // Se a operação for um depósito futuro 
+                    if (operation.Type == OperationType.FutureDeposit) 
                     {
-                        account.Balance += operation.Amount; // Adiciona o valor do depósito ao saldo
-                        operation.Status = OperationStatus.Executed; // Muda o status da operação para executado
+                        account.Balance += operation.Amount; 
+                        operation.Status = OperationStatus.Executed; 
                     }
-                    else if (operation.Type == OperationType.FutureWithdraw) // Se a operação for um saque futuro
+                    else if (operation.Type == OperationType.FutureWithdraw) 
                     {
-                        account.Balance -= operation.Amount; // Subtrai o valor do saque do saldo
-                        operation.Status = OperationStatus.Executed; // Muda o status da operação para executado
+                        account.Balance -= operation.Amount; 
+                        operation.Status = OperationStatus.Executed; 
                     }
                 }
             }

@@ -7,8 +7,8 @@ namespace ApiStone.Data.Dtos.Withdraw
     public class WithdrawPostDto
     {
         public string Description { get; set; } = "description example: withdraw";
-        public decimal Amount { get; set; } // amount of money to be withdrawn
-        public DateTime CreatedAt { get; set; } = DateTime.Now; // date the operation was created
-        public DateTime ScheduledAt { get; set; } = DateTime.Now; // date the operation was scheduled
+        public decimal Amount { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ScheduledAt { get; set; } = DateTime.Now;
     }
 }

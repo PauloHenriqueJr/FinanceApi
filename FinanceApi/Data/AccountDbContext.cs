@@ -18,7 +18,7 @@ namespace ApiStone.Data
 
 
         }
-        public DbSet<Account> Accounts { get; set; } // Accounts table
-        public DbSet<Operation> Operations { get; set; } // Transactions table
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Operation> Operations { get; set; }
     }
 }

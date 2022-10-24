@@ -6,6 +6,6 @@ namespace ApiStone.Data.Dtos.Deposit
     public class DepositPostDto
     {
         public string? Description { get; set; } = "description example: deposit";
-        public decimal Amount { get; set; } // amount of money to be deposited
+        public decimal Amount { get; set; }
     }
 }

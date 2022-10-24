@@ -3,10 +3,7 @@ using ApiStone.Data.Dtos.Deposit;
 using ApiStone.Data.Dtos.Operation;
 using ApiStone.Data.Dtos.Withdraw;
 using ApiStone.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using System.Net;
 
 namespace ApiStone.Controllers
 {

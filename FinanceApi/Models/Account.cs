@@ -8,11 +8,11 @@ namespace ApiStone.Models
         [Key]
         [Required]
         public int Id { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Required(ErrorMessage = "This field is required")]
         public string? UserName { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Required(ErrorMessage = "This field is required")]
         public string? Cpf { get; set; }
-        public decimal Balance { get; set; } 
+        public decimal Balance { get; set; }
         public AccountStatus Status { get; set; }
         //public string Token { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
