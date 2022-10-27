@@ -6,10 +6,11 @@ namespace ApiStone.Mappers
     {
         public DomainMapperProfile()
         {
-            AccountProfile();
-            OperationProfile();
-            DepositProfile();
-            WithdrawProfile();
+            AccountMapper();
+            BalanceMapper();
+            OperationMapper();
+            DepositMapper();
+            WithdrawMapper();
         }
     }
 

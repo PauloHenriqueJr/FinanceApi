@@ -1,9 +1,9 @@
 ﻿using ApiStone.Converters;
 using System.Text.Json.Serialization;
 
-namespace ApiStone.Data.Dtos.Account
+namespace FinanceApi.Data.Dtos.Balance
 {
-    public class AccountBalanceGetDto
+    public class BalanceGetDto
     {
         public string? UserName { get; set; }
         [JsonConverter(typeof(JsonDecimalConverter))]

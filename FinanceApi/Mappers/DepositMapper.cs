@@ -6,7 +6,7 @@ namespace ApiStone.Mappers
 {
     public partial class DomainMapperProfile : Profile
     {
-        public void DepositProfile()
+        public void DepositMapper()
         {
             CreateMap<Operation, DepositPostDto>().ReverseMap();
             CreateMap<Operation, DepositGetDto>().ReverseMap();

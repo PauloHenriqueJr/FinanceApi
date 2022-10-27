@@ -6,7 +6,7 @@ namespace ApiStone.Mappers
 {
     public partial class DomainMapperProfile : Profile
     {
-        public void OperationProfile()
+        public void OperationMapper()
         {
             CreateMap<Operation, OperationPostDto>().ReverseMap();
             CreateMap<Operation, OperationGetDto>().ReverseMap();

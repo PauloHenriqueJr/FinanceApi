@@ -1,5 +1,6 @@
 using ApiStone.Data;
-using ApiStone.Services;
+using FinanceApi.Repository.Interfaces;
+using FinanceApi.Repository.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -10,13 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 string mySqlConnection =
 builder.Configuration.GetConnectionString("ConnectionAccount");
-builder.Services.AddDbContextPool<AccountDbContext>(opt =>
+builder.Services.AddDbContextPool<FinanceDbContext>(opt =>
 opt.UseLazyLoadingProxies().UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<AccountService, AccountService>();
-//builder.Services.AddScoped<OperationService, OperationService>();
+builder.Services.AddScoped<IDepositService, DepositService>();
+builder.Services.AddScoped<IWithdrawService, WithdrawService>();
+builder.Services.AddScoped<IStatementService, StatementService>();
+builder.Services.AddScoped<IBalanceService, BalanceService>();
 //builder.Services.AddScoped<TransferService, TransferService>();
 //builder.Services.AddScoped<LoginService, LoginService>();
 //builder.Services.AddScoped<RegisterService, RegisterService>();

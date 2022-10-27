@@ -6,7 +6,7 @@ namespace ApiStone.Mappers
 {
     public partial class DomainMapperProfile : Profile
     {
-        public void WithdrawProfile()
+        public void WithdrawMapper()
         {
             CreateMap<Operation, WithdrawPostDto>().ReverseMap();
             CreateMap<Operation, WithdrawGetDto>().ReverseMap();

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiStone.Data
 {
-    public class AccountDbContext : DbContext
+    public class FinanceDbContext : DbContext
     {
-        public AccountDbContext(DbContextOptions<AccountDbContext> opt) : base(opt)
+        public FinanceDbContext(DbContextOptions<FinanceDbContext> opt) : base(opt)
         {
         }
 
