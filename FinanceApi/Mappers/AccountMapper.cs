@@ -5,7 +5,7 @@ using FinanceApi.Data.Dtos.Balance;
 
 namespace ApiStone.Mappers
 {
-    public partial class DomainMapperProfile : Profile
+    public partial class DomainMapper : Profile
     {
         public void AccountMapper()
         {

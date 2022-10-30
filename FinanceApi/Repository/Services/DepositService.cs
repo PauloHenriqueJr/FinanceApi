@@ -32,22 +32,16 @@ namespace FinanceApi.Repository.Services
         {
             Account? account = await GetAccount(id);
 
-            if (depositDto.Amount <= 0 || depositDto.Amount == null)
-            {
-                throw new Exception("Invalid amount");
-            }
+            if (depositDto.Amount <= 0) throw new Exception("The amount must be greater than zero");
 
-            else
-            {
-                account.Balance += depositDto.Amount;
-                var operation = _mapper.Map<Operation>(depositDto);
-                operation.AccountId = id;
-                operation.Type = OperationType.Deposit;
-                operation.Status = OperationStatus.Executed;
-                await _context.Operations.AddAsync(operation);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<DepositGetDto>(operation);
-            }
+            account.Balance += depositDto.Amount;
+            var operation = _mapper.Map<Operation>(depositDto);
+            operation.AccountId = id;
+            operation.Type = OperationType.Deposit;
+            operation.Status = OperationStatus.Executed;
+            await _context.Operations.AddAsync(operation);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<DepositGetDto>(operation);
 
         }
 
@@ -63,28 +57,20 @@ namespace FinanceApi.Repository.Services
         {
             Account? account = await GetAccount(id);
 
-            if (depositDto.Amount <= 0 || depositDto.Amount == null)
-            {
-                throw new Exception("Invalid value");
-            }
-            else if (date < DateTime.Now || date == null)
-            {
-                throw new Exception("Invalid date");
-            }
+            if (depositDto.Amount <= 0) throw new Exception("The amount must be greater than zero");
 
-            else
-            {
+            else if (date < DateTime.Now) throw new Exception("The date must be greater than the current date");
 
-                var operation = _mapper.Map<Operation>(depositDto);
-                operation.AccountId = id;
-                operation.Type = OperationType.FutureDeposit;
-                operation.Status = OperationStatus.Scheduled;
-                operation.ScheduledAt = date;
+            var operation = _mapper.Map<Operation>(depositDto);
+            operation.AccountId = id;
+            operation.Type = OperationType.FutureDeposit;
+            operation.Status = OperationStatus.Scheduled;
+            operation.ScheduledAt = date;
 
-                await _context.Operations.AddAsync(operation);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<DepositGetDto>(operation);
-            }
+            await _context.Operations.AddAsync(operation);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<DepositGetDto>(operation);
+
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using ApiStone.Data;
+using ApiStone.Models;
 using AutoMapper;
 using FinanceApi.Data.Dtos.Balance;
 using FinanceApi.Repository.Interfaces;
@@ -20,21 +21,14 @@ namespace FinanceApi.Repository.Services
 
         public async Task<BalanceGetDto> GetBalanceAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
             return _mapper.Map<BalanceGetDto>(account);
         }
 
         public async Task<BalanceGetDto> GetBalanceByDateAsync(int id, DateTime date)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                throw new Exception("Account not found");
-            }
+            Account? account = await GetAccount(id);
+            
             var balance = account.Balance;
             var operations = await _context.Operations.Where(o => o.AccountId == id && o.ScheduledAt <= date).ToListAsync();
             foreach (var operation in operations)
@@ -52,7 +46,18 @@ namespace FinanceApi.Repository.Services
             }
             account.Balance = balance;
             return _mapper.Map<BalanceGetDto>(account);
-            
+
+        }
+
+        private async Task<Account> GetAccount(int id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new Exception("Account not found");
+            }
+
+            return account;
         }
     }
 }

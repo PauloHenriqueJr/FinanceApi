@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ApiStone.Data
 {
     public class FinanceDbContext : DbContext
-    {
+    {  
         public FinanceDbContext(DbContextOptions<FinanceDbContext> opt) : base(opt)
         {
         }
@@ -18,7 +18,10 @@ namespace ApiStone.Data
 
 
         }
+        
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Operation> Operations { get; set; }
+
+
     }
 }

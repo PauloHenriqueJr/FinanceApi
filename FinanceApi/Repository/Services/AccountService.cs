@@ -14,22 +14,16 @@ namespace FinanceApi.Repository.Services
 {
     public class AccountService : IAccountService
     {
-        #region Properties
+        
         private readonly FinanceDbContext _context;
         private readonly IMapper _mapper;
-        # endregion
 
-        # region Constructor
         public AccountService(FinanceDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-        #endregion Constructor
 
-        #region Account Methods
-
-        #region PostAccount
         /// <summary>
         /// Method to create a new account
         /// </summary>
@@ -44,10 +38,6 @@ namespace FinanceApi.Repository.Services
 
         }
 
-        #endregion PostAccount
-
-        #region GetAllAccounts
-
         /// <summary>
         /// Method to get all accounts
         /// </summary>
@@ -57,10 +47,6 @@ namespace FinanceApi.Repository.Services
             var accounts = await _context.Accounts.ToListAsync();
             return _mapper.Map<IEnumerable<AccountGetDto>>(accounts);
         }
-
-        #endregion GetAllAccounts
-
-        #region GetAllAccount By Id
 
         /// <summary>
         /// Method to get account by id
@@ -74,10 +60,6 @@ namespace FinanceApi.Repository.Services
             return _mapper.Map<AccountGetDto>(account);
         }
 
-
-        #endregion GetAllAccount By Id
-
-        #region PutAccount By Id
 
         /// <summary>
         /// Method to update an account by id
@@ -94,10 +76,6 @@ namespace FinanceApi.Repository.Services
             return _mapper.Map<AccountGetDto>(account);
         }
 
-        #endregion PutAccount By Id
-
-        #region DeleteAccount By Id
-
         /// <summary>
         /// Method to delete and account by id
         /// </summary>
@@ -112,11 +90,13 @@ namespace FinanceApi.Repository.Services
             return _mapper.Map<AccountGetDto>(account);
         }
 
-        #endregion DeleteAccount By Id
 
-        #endregion Account Methods
-
-
+        /// <summary>
+        /// Method get account id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private async Task<Account> GetAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);

@@ -2,6 +2,7 @@
 using ApiStone.Data.Dtos.Deposit;
 using ApiStone.Data.Dtos.Operation;
 using ApiStone.Data.Dtos.Withdraw;
+using FinanceApi.Repository.Interfaces;
 using FinanceApi.Repository.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,9 @@ namespace ApiStone.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private AccountService _accountService;
+        private IAccountService _accountService;
 
-        public AccountController(AccountService accountService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }

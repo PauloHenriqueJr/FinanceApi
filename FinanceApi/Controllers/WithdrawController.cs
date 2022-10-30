@@ -24,7 +24,14 @@ namespace FinanceApi.Controllers
         [HttpPost("{id}")]
         public async Task<WithdrawGetDto> PostWithdrawAsync(int id, [FromBody] WithdrawPostDto withdrawDto)
         {
-            return await _withdrawService.PostWithdrawAsync(id, withdrawDto);
+            try
+            {
+                return await _withdrawService.PostWithdrawAsync(id, withdrawDto);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         /// <summary>

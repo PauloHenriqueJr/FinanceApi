@@ -4,7 +4,7 @@ using AutoMapper;
 
 namespace ApiStone.Mappers
 {
-    public partial class DomainMapperProfile : Profile
+    public partial class DomainMapper : Profile
     {
         public void OperationMapper()
         {

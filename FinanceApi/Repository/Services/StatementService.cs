@@ -28,7 +28,10 @@ namespace FinanceApi.Repository.Services
         {
             Account? account = await GetAccount(id);
 
-            var operations = await _context.Operations.Where(x => x.AccountId == id).ToListAsync();
+            var operations = await _context.Operations
+                .Where(o => o.AccountId == account.Id)
+                .ToListAsync();
+
             return _mapper.Map<IEnumerable<OperationGetDto>>(operations);
         }
 

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApi.Migrations
 {
     [DbContext(typeof(FinanceDbContext))]
-    [Migration("20221027023325_Start")]
-    partial class Start
+    [Migration("20221030125628_Iniciando Migrations")]
+    partial class IniciandoMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

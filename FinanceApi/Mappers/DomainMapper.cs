@@ -2,9 +2,9 @@
 
 namespace ApiStone.Mappers
 {
-    public partial class DomainMapperProfile: Profile
+    public partial class DomainMapper: Profile
     {
-        public DomainMapperProfile()
+        public DomainMapper()
         {
             AccountMapper();
             BalanceMapper();

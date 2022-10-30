@@ -19,6 +19,12 @@ namespace ApiStone.Models
         public DateTime UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
         public virtual List<Operation>? Operations { get; set; }
+
+
+        public Account()
+        {
+        }
     }
+    
 
 }

@@ -24,7 +24,14 @@ namespace FinanceApi.Controllers
         [HttpGet("{id}")]
         public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
-            return await _operationService.GetAllOperationsAsync(id);
+            try
+            {
+                return await _operationService.GetAllOperationsAsync(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
 

@@ -16,5 +16,6 @@ namespace ApiStone.Models
         public DateTime ScheduledAt { get; set; }
         public int AccountId { get; set; }
         public virtual Account Account { get; set; }
+
     }
 }
