@@ -1,20 +1,15 @@
 ﻿using ApiStone.Data;
 using ApiStone.Data.Dtos.Account;
-using ApiStone.Data.Dtos.Deposit;
-using ApiStone.Data.Dtos.Operation;
-using ApiStone.Data.Dtos.Withdraw;
 using ApiStone.Models;
 using AutoMapper;
-using FinanceApi.Data.Dtos.Balance;
 using FinanceApi.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceApi.Repository.Services
 {
     public class AccountService : IAccountService
     {
-        
+
         private readonly FinanceDbContext _context;
         private readonly IMapper _mapper;
 

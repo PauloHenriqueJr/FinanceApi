@@ -1,13 +1,5 @@
-using ApiStone.Data;
 using ApiStone.Data.Dtos.Withdraw;
-using ApiStone.Mappers;
 using ApiStone.Models;
-using AutoMapper;
-using FinanceApi.Repository.Interfaces;
-using FinanceApi.Repository.Services;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceTest.ServiceTest
 {
@@ -80,7 +72,7 @@ namespace FinanceTest.ServiceTest
             // Assert
             Assert.IsTrue(result);
         }
-
+        
 
     }
 }
