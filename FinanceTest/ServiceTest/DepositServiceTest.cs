@@ -1,11 +1,9 @@
 ﻿using ApiStone.Data.Dtos.Deposit;
 using ApiStone.Models;
+using AutoMapper;
+using FinanceApi.Repository.Interfaces;
 using FinanceApi.Repository.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Moq;
 
 namespace FinanceTest.ServiceTest
 {
@@ -19,6 +17,8 @@ namespace FinanceTest.ServiceTest
         {
             _depositPostDto = new DepositPostDto();
         }
+
+
 
         [TestMethod]
         public void PostDeposit_AmountGreaterThanZero_True()

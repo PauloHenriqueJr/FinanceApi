@@ -14,6 +14,6 @@ namespace ApiStone.Data.Dtos.Deposit
         public OperationStatus Status { get; set; } 
         public decimal Amount { get; set; } 
         [JsonConverter(typeof(JsonDateTimeConverter))]
-        public DateTime CreatedAt { get; set; } = DateTime.Now; 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

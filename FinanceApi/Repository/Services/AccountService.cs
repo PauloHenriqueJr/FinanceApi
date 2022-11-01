@@ -102,7 +102,5 @@ namespace FinanceApi.Repository.Services
 
             return account;
         }
-
-
     }
 }
