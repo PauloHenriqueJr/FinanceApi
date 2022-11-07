@@ -9,6 +9,7 @@ namespace ApiStone.Data.Dtos.Operation
         public int Id { get; set; }
         public string Description { get; set; }
         public OperationType Type { get; set; }
+        public OperationStatus Status { get; set; }
         [JsonConverter(typeof(JsonDecimalConverter))]
         public decimal Amount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

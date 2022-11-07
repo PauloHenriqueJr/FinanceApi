@@ -9,8 +9,8 @@ namespace FinanceApi.Controllers
     [Route("[controller]")]
     public class DepositController : Controller
     {
-        private readonly IDepositService _depositService;
-
+        private IDepositService _depositService;
+        
         public DepositController(IDepositService depositService)
         {
             _depositService = depositService;
@@ -26,7 +26,7 @@ namespace FinanceApi.Controllers
         [HttpPost("{id}")]
         public async Task<DepositGetDto> PostDepositAsync(int id, [FromBody] DepositPostDto depositDto)
         {
-            return await _depositService.PostDepositAsync(id, depositDto);
+            return await _depositService.CreateDepositAsync(id, depositDto);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace FinanceApi.Controllers
         [HttpPost("{id}/date")]
         public async Task<DepositGetDto> PostDepositByDateAsync(int id, [FromQuery] DateTime date, [FromBody] DepositPostDto depositDto)
         {
-            return await _depositService.PostDepositByDateAsync(id, date, depositDto);
+            return await _depositService.CreateDepositByDateAsync(id, date, depositDto);
         }
     }
 }

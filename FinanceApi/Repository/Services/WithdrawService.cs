@@ -1,10 +1,8 @@
 ﻿using ApiStone.Data;
-using ApiStone.Data.Dtos.Operation;
 using ApiStone.Data.Dtos.Withdraw;
 using ApiStone.Models;
 using AutoMapper;
 using FinanceApi.Repository.Interfaces;
-using Moq;
 using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceApi.Repository.Services
@@ -13,10 +11,6 @@ namespace FinanceApi.Repository.Services
     {
         private readonly FinanceDbContext _context;
         private readonly IMapper _mapper;
-
-        public WithdrawService()
-        {
-        }
 
         public WithdrawService(FinanceDbContext context, IMapper mapper)
         {
@@ -31,7 +25,7 @@ namespace FinanceApi.Repository.Services
         /// <param name="withdrawDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<WithdrawGetDto> PostWithdrawAsync(int id, WithdrawPostDto withdrawDto)
+        public async Task<WithdrawGetDto> CreateWithdrawAsync(int id, WithdrawPostDto withdrawDto)
         {
             Account? account = await GetAccount(id);
             Conditionals(withdrawDto, account);
@@ -55,7 +49,7 @@ namespace FinanceApi.Repository.Services
         /// <param name="withdrawDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto)
+        public async Task<WithdrawGetDto> CreateWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto)
         {
             Account? account = await GetAccount(id);
             Conditionals(withdrawDto, account);

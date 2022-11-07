@@ -5,7 +5,7 @@ namespace FinanceApi.Repository.Interfaces
 {
     public interface IWithdrawService
     {
-        Task<WithdrawGetDto> PostWithdrawAsync(int id, WithdrawPostDto withdrawDto);
-        Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto);
+        Task<WithdrawGetDto> CreateWithdrawAsync(int id, WithdrawPostDto withdrawDto);
+        Task<WithdrawGetDto> CreateWithdrawByDateAsync(int id, DateTime date, WithdrawPostDto withdrawDto);
     }
 }

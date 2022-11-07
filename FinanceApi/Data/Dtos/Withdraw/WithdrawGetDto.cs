@@ -15,5 +15,7 @@ namespace ApiStone.Data.Dtos.Withdraw
         public decimal Amount { get; set; }
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public int AccountId { get; set; }
+        public DateTime ScheduledAt { get; set; }
     }
 }

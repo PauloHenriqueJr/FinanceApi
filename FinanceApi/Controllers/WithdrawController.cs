@@ -24,14 +24,7 @@ namespace FinanceApi.Controllers
         [HttpPost("{id}")]
         public async Task<WithdrawGetDto> PostWithdrawAsync(int id, [FromBody] WithdrawPostDto withdrawDto)
         {
-            try
-            {
-                return await _withdrawService.PostWithdrawAsync(id, withdrawDto);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+            return await _withdrawService.CreateWithdrawAsync(id, withdrawDto);
         }
 
         /// <summary>
@@ -44,7 +37,7 @@ namespace FinanceApi.Controllers
         [HttpPost("{id}/date")]
         public async Task<WithdrawGetDto> PostWithdrawByDateAsync(int id, [FromQuery] DateTime date, WithdrawPostDto withdrawDto)
         {
-            return await _withdrawService.PostWithdrawByDateAsync(id, date, withdrawDto);
+            return await _withdrawService.CreateWithdrawByDateAsync(id, date, withdrawDto);
         }
     }
 }

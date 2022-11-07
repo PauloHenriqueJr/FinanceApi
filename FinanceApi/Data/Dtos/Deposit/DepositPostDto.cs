@@ -8,6 +8,6 @@ namespace ApiStone.Data.Dtos.Deposit
         public string? Description { get; set; } = "description example: deposit";
         public decimal Amount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime ScheduledAt { get; set; } = DateTime.Now;
+        public OperationType Type { get; set; }
     }
 }

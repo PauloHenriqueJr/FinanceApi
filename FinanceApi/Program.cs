@@ -19,7 +19,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IDepositService, DepositService>();
 builder.Services.AddScoped<IWithdrawService, WithdrawService>();
-builder.Services.AddScoped<IStatementService, StatementService>();
+builder.Services.AddScoped<IOperationService, OperationService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 //builder.Services.AddScoped<TransferService, TransferService>();
 //builder.Services.AddScoped<LoginService, LoginService>();

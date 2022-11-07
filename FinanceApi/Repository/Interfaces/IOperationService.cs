@@ -2,7 +2,7 @@
 
 namespace FinanceApi.Repository.Interfaces
 {
-    public interface IStatementService
+    public interface IOperationService
     {
         Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id);
 

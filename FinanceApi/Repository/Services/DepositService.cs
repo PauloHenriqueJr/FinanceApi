@@ -11,8 +11,8 @@ namespace FinanceApi.Repository.Services
 {
     public class DepositService : IDepositService
     {
-        private readonly FinanceDbContext _context;
-        private readonly IMapper _mapper;
+        private FinanceDbContext _context;
+        private IMapper _mapper;
 
         public DepositService(FinanceDbContext context, IMapper mapper)
         {
@@ -28,9 +28,9 @@ namespace FinanceApi.Repository.Services
         /// <param name="depositDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<DepositGetDto> PostDepositAsync(int id, DepositPostDto depositDto)
+        public async Task<DepositGetDto> CreateDepositAsync(int id, DepositPostDto depositDto)
         {
-            Account? account = await GetAccount(id);
+            Account account = await GetAccount(id);
 
             if (depositDto.Amount <= 0) throw new Exception("The amount must be greater than zero");
 
@@ -53,9 +53,13 @@ namespace FinanceApi.Repository.Services
         /// <param name="depositDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<DepositGetDto> PostDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto)
+        public async Task<DepositGetDto> CreateDepositByDateAsync(int id, DateTime date, DepositPostDto depositDto)
         {
-            Account? account = await GetAccount(id);
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new Exception("Account not found");
+            }
 
             if (depositDto.Amount <= 0) throw new Exception("The amount must be greater than zero");
 
@@ -89,5 +93,6 @@ namespace FinanceApi.Repository.Services
 
             return account;
         }
+
     }
 }

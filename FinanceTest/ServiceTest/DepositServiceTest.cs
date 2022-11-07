@@ -4,60 +4,90 @@ using AutoMapper;
 using FinanceApi.Repository.Interfaces;
 using FinanceApi.Repository.Services;
 using Moq;
+using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceTest.ServiceTest
 {
     [TestClass]
     public class DepositServiceTest
     {
-        private DepositPostDto _depositPostDto;
+        private Mock<IMapper> _mapper;
+        private Mock<IDepositService> _depositService;
 
         [TestInitialize]
         public void Initialize()
         {
-            _depositPostDto = new DepositPostDto();
+            _mapper = new Mock<IMapper>();
+            _depositService = new Mock<IDepositService>();
+
+            _depositService.Setup(x => x.CreateDepositAsync(It.IsAny<int>(), It.IsAny<DepositPostDto>()))
+                .ReturnsAsync(new DepositGetDto
+                {
+                    Id = 1,
+                    AccountId = 1,
+                    Amount = 100,
+                    CreatedAt = DateTime.Now,
+                    Description = "description example: deposit",
+                    ScheduledAt = DateTime.Now,
+                    Status = OperationStatus.Executed,
+                    Type = OperationType.Deposit
+                });
+
+            _depositService.Setup(x => x.CreateDepositByDateAsync(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DepositPostDto>()))
+                .ReturnsAsync(new DepositGetDto
+                {
+                    Id = 1,
+                    AccountId = 1,
+                    Amount = 100,
+                    CreatedAt = DateTime.Now,
+                    Description = "description example: future deposit",
+                    ScheduledAt = DateTime.Now.AddDays(1),
+                    Status = OperationStatus.Scheduled,
+                    Type = OperationType.FutureDeposit
+                });
+
         }
 
 
-
-        [TestMethod]
-        public void PostDeposit_AmountGreaterThanZero_True()
+        [TestMethod("Create Deposit")]
+        public async Task CreateDepositAsync_ShouldReturnDepositGetDto()
         {
             // Arrange
-            _depositPostDto.Amount = 100;
-
+            
+            
             // Act
-            bool result = _depositPostDto.Amount > 0;
+            var result = await _depositService.Object.CreateDepositAsync(1, new DepositPostDto());
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual(1, result.AccountId);
+            Assert.AreEqual(100, result.Amount);
+            Assert.AreEqual("description example: deposit", result.Description);
+            Assert.AreEqual(OperationStatus.Executed, result.Status);
+            Assert.AreEqual(OperationType.Deposit, result.Type);
+            
         }
 
-        [TestMethod]
-        public void PostDeposit_AmountLessThanZero_True()
+        [TestMethod("Create a deposit with a scheduled date")]
+        public async Task CreateDepositByDateAsync_ShouldReturnDepositGetDto()
         {
             // Arrange
-            _depositPostDto.Amount = -100;
+            var date = DateTime.Now.AddDays(1);
 
             // Act
-            bool result = _depositPostDto.Amount < 0;
+            var result = await _depositService.Object.CreateDepositByDateAsync(1, date, new DepositPostDto());
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual(1, result.AccountId);
+            Assert.AreEqual(100, result.Amount);
+            Assert.AreEqual("description example: future deposit", result.Description);
+            Assert.AreEqual(OperationStatus.Scheduled, result.Status);
+            Assert.AreEqual(OperationType.FutureDeposit, result.Type);
+
         }
 
-        [TestMethod]
-        public void PostDeposit_AmountEqualsZero_True()
-        {
-            // Arrange
-            _depositPostDto.Amount = 0;
-
-            // Act
-            bool result = _depositPostDto.Amount == 0;
-
-            // Assert
-            Assert.IsTrue(result);
-        }
     }
-    
 }

@@ -15,5 +15,8 @@ namespace ApiStone.Data.Dtos.Deposit
         public decimal Amount { get; set; } 
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTime ScheduledAt { get; set; }
+        public int AccountId { get; set; }
     }
 }

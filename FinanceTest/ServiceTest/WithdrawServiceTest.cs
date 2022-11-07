@@ -1,78 +1,85 @@
 using ApiStone.Data.Dtos.Withdraw;
 using ApiStone.Models;
+using AutoMapper;
+using FinanceApi.Repository.Interfaces;
+using Moq;
+using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceTest.ServiceTest
 {
     [TestClass]
     public class WithdrawServiceTest
     {
-        private Account _account;
-        private WithdrawPostDto _withdrawPostDto;
+        private Mock<IMapper> _mapper;
+        private Mock<IWithdrawService> _withdrawService;
 
         [TestInitialize]
         public void Initialize()
         {
-            _account = new Account();
-            _withdrawPostDto = new WithdrawPostDto();
+            _mapper = new Mock<IMapper>();
+            _withdrawService = new Mock<IWithdrawService>();
+
+            _withdrawService.Setup(x => x.CreateWithdrawAsync(It.IsAny<int>(), It.IsAny<WithdrawPostDto>()))
+                .ReturnsAsync(new WithdrawGetDto
+                {
+                    Id = 1,
+                    AccountId = 1,
+                    Amount = 100,
+                    CreatedAt = DateTime.Now,
+                    Description = "description example: withdraw",
+                    Status = OperationStatus.Executed,
+                    Type = OperationType.Withdraw
+                });
+
+            _withdrawService.Setup(x => x.CreateWithdrawByDateAsync(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<WithdrawPostDto>()))
+                .ReturnsAsync(new WithdrawGetDto
+                {
+                    Id = 1,
+                    AccountId = 1,
+                    Amount = 100,
+                    CreatedAt = DateTime.Now,
+                    Description = "description example: future withdraw",
+                    ScheduledAt = DateTime.Now.AddDays(1),
+                    Status = OperationStatus.Scheduled,
+                    Type = OperationType.FutureWithdraw
+                });
         }
 
-
-        [TestMethod]
-        public void PostWithdraw_AmountGreaterThanZero_True()
+        [TestMethod("Create Withdraw")]
+        public async Task CreateWithdrawAsync_ShouldReturnWithdrawGetDto()
         {
             // Arrange
-            _account.Balance = 1000;
-            _withdrawPostDto.Amount = 100;
 
             // Act
-            bool result = _withdrawPostDto.Amount > 0;
+            var result = await _withdrawService.Object.CreateWithdrawAsync(1, new WithdrawPostDto());
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual(1, result.AccountId);
+            Assert.AreEqual(100, result.Amount);
+            Assert.AreEqual("description example: withdraw", result.Description);
+            Assert.AreEqual(OperationStatus.Executed, result.Status);
+            Assert.AreEqual(OperationType.Withdraw, result.Type);
         }
 
-        [TestMethod]
-        public void PostWithdraw_InsufficientBalance_True()
+        [TestMethod("Create a withdraw with scheduled date")]
+        public async Task CreateWithdrawByDateAsync_ShouldReturnWithdrawGetDto()
         {
             // Arrange
-            _account.Balance = 1000;
-            _withdrawPostDto.Amount = 2000;
-
+            var date = DateTime.Now.AddDays(1);
             // Act
-            bool result = _account.Balance < _withdrawPostDto.Amount;
+            var result = await _withdrawService.Object.CreateWithdrawByDateAsync(1, date, new WithdrawPostDto());
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual(1, result.AccountId);
+            Assert.AreEqual(100, result.Amount);
+            Assert.AreEqual("description example: future withdraw", result.Description);
+            Assert.AreEqual(OperationStatus.Scheduled, result.Status);
+            Assert.AreEqual(OperationType.FutureWithdraw, result.Type);
         }
-
-        [TestMethod]
-        public void PostWithdraw_AmountLessThanBalance_True()
-        {
-            // Arrange
-            _account.Balance = 1000;
-            _withdrawPostDto.Amount = 500;
-
-            // Act
-            bool result = _account.Balance >= _withdrawPostDto.Amount;
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void PostWithdraw_AmountLessThanBalanceAndGreaterThanZero_True()
-        {
-            // Arrange
-            _account.Balance = 1000;
-            _withdrawPostDto.Amount = 500;
-
-            // Act
-            bool result = _account.Balance >= _withdrawPostDto.Amount && _withdrawPostDto.Amount > 0;
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-        
 
     }
 }

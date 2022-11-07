@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinanceApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class StatementController : Controller
+    [Route("Statement")]
+    public class OperationController : Controller
     {
-        private readonly IStatementService _operationService;
+        private readonly IOperationService _operationService;
 
-        public StatementController(IStatementService operationService)
+        public OperationController(IOperationService operationService)
         {
             _operationService = operationService;
         }
@@ -24,14 +24,7 @@ namespace FinanceApi.Controllers
         [HttpGet("{id}")]
         public async Task<IEnumerable<OperationGetDto>> GetAllOperationsAsync(int id)
         {
-            try
-            {
-                return await _operationService.GetAllOperationsAsync(id);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+            return await _operationService.GetAllOperationsAsync(id);
         }
 
 

@@ -5,9 +5,13 @@ namespace ApiStone.Data
 {
     public class FinanceDbContext : DbContext
     {
-        public FinanceDbContext(DbContextOptions<FinanceDbContext> opt) : base(opt)
+        public FinanceDbContext(DbContextOptions<FinanceDbContext> options) : base(options)
         {
         }
+
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder Builder)
         {
@@ -18,9 +22,6 @@ namespace ApiStone.Data
 
 
         }
-
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Operation> Operations { get; set; }
 
 
     }

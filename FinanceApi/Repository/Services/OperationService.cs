@@ -8,16 +8,17 @@ using static ApiStone.Enuns.EnumStatus;
 
 namespace FinanceApi.Repository.Services
 {
-    public class StatementService : IStatementService
+    public class OperationService : IOperationService
     {
         private readonly FinanceDbContext _context;
         private readonly IMapper _mapper;
 
-        public StatementService(FinanceDbContext context, IMapper mapper)
+        public OperationService(FinanceDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
 
         /// <summary>
         /// Method to get all operations

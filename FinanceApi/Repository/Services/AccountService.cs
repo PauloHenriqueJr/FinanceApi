@@ -19,6 +19,7 @@ namespace FinanceApi.Repository.Services
             _mapper = mapper;
         }
 
+
         /// <summary>
         /// Method to create a new account
         /// </summary>
@@ -51,7 +52,11 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> GetAccountAsync(int id)
         {
-            Account? account = await GetAccount(id);
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new Exception("Account not found");
+            }
             return _mapper.Map<AccountGetDto>(account);
         }
 
@@ -65,7 +70,11 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> PutAccountAsync(int id, AccountPutDto accountPutDto)
         {
-            Account? account = await GetAccount(id);
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new Exception("Account not found");
+            }
             _mapper.Map(accountPutDto, account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
@@ -79,28 +88,15 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> DeleteAccountAsync(int id)
         {
-            Account? account = await GetAccount(id);
-            _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<AccountGetDto>(account);
-        }
-
-
-        /// <summary>
-        /// Method get account id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private async Task<Account> GetAccount(int id)
-        {
             var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
                 throw new Exception("Account not found");
             }
-
-            return account;
+            _context.Accounts.Remove(account);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<AccountGetDto>(account);
         }
+
     }
 }
