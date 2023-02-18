@@ -15,40 +15,50 @@ namespace FinanceApi.Repository.Services
 
         public BalanceService(FinanceDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Method to get balance by account id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<BalanceGetDto> GetBalanceAsync(int id)
         {
             Account? account = await GetAccount(id);
             return _mapper.Map<BalanceGetDto>(account);
         }
 
+        /// <summary>
+        /// Method to get account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<BalanceGetDto> GetBalanceByDateAsync(int id, DateTime date)
         {
             Account? account = await GetAccount(id);
-            
-            var balance = account.Balance;
-            var operations = await _context.Operations.Where(o => o.AccountId == id && o.ScheduledAt <= date).ToListAsync();
-            foreach (var operation in operations)
+
+            if (account == null)
             {
-                if (operation.Type == OperationType.FutureDeposit)
-                {
-                    balance += operation.Amount;
-                    operation.Status = OperationStatus.Executed;
-                }
-                else if (operation.Type == OperationType.FutureWithdraw)
-                {
-                    balance -= operation.Amount;
-                    operation.Status = OperationStatus.Executed;
-                }
+                throw new ArgumentNullException(nameof(account));
             }
-            account.Balance = balance;
+
+            var balance = account.Balance;
+            var operations = await GetOperations(id, date);
+            UpdateAccountBalance(account, operations);
             return _mapper.Map<BalanceGetDto>(account);
 
         }
 
+        /// <summary>
+        /// Method to get account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private async Task<Account> GetAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -58,6 +68,44 @@ namespace FinanceApi.Repository.Services
             }
 
             return account;
+        }
+
+        /// <summary>
+        /// Method to get all operations by account id and date
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        private async Task<List<Operation>> GetOperations(int id, DateTime date)
+        {
+            return await _context.Operations
+                .Where(o => o.AccountId == id && o.ScheduledAt <= date)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Method to update account balance
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="operations"></param>
+        private void UpdateAccountBalance(Account account, List<Operation> operations)
+        {
+            foreach (var operation in operations)
+            {
+                switch (operation.Type)
+                {
+                    case OperationType.FutureDeposit:
+                        account.Balance += operation.Amount;
+                        operation.Status = OperationStatus.Executed;
+                        break;
+                    case OperationType.FutureWithdraw:
+                        account.Balance -= operation.Amount;
+                        operation.Status = OperationStatus.Executed;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
