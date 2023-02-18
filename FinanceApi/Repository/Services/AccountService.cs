@@ -2,6 +2,7 @@
 using ApiStone.Data.Dtos.Account;
 using ApiStone.Models;
 using AutoMapper;
+using FinanceApi.Helpers.Exceptions;
 using FinanceApi.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +16,8 @@ namespace FinanceApi.Repository.Services
 
         public AccountService(FinanceDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
 
@@ -27,11 +28,15 @@ namespace FinanceApi.Repository.Services
         /// <returns></returns>
         public async Task<AccountGetDto> PostAccountAsync(AccountPostDto accountPostDto)
         {
-            var account = _mapper.Map<Account>(accountPostDto);
+            if (accountPostDto == null)
+            {
+                throw new ArgumentNullException(nameof(accountPostDto), "AccountPostDto cannot be null");
+            }
+
+            Account? account = _mapper.Map<Account>(accountPostDto);
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
             return _mapper.Map<AccountGetDto>(account);
-
         }
 
         /// <summary>
@@ -52,10 +57,10 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> GetAccountAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
+            Account? account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
-                throw new Exception("Account not found");
+                throw new AccountNotFoundException($"Account with id {id} not found");
             }
             return _mapper.Map<AccountGetDto>(account);
         }
@@ -70,10 +75,15 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> PutAccountAsync(int id, AccountPutDto accountPutDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
+            if (accountPutDto == null)
+            {
+                throw new ArgumentNullException(nameof(accountPutDto), "AccountPutDto cannot be null");
+            }
+
+            Account? account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
-                throw new Exception("Account not found");
+                throw new AccountNotFoundException($"Account with id {id} not found");
             }
             _mapper.Map(accountPutDto, account);
             await _context.SaveChangesAsync();
@@ -88,10 +98,10 @@ namespace FinanceApi.Repository.Services
         /// <exception cref="Exception"></exception>
         public async Task<AccountGetDto> DeleteAccountAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
+            Account? account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
-                throw new Exception("Account not found");
+                throw new AccountNotFoundException($"Account with id {id} not found");
             }
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
